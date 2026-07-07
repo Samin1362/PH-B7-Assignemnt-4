@@ -1,0 +1,43 @@
+enum RentalStatus {
+  PLACED
+  CONFIRMED
+  PAID
+  PICKED_UP
+  RETURNED
+  CANCELLED
+}
+
+model RentalOrder {
+  id         String       @id @default(uuid())
+  status     RentalStatus @default(PLACED)
+  startDate  DateTime
+  endDate    DateTime
+  totalPrice Decimal      @db.Decimal(10, 2)
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+
+  customerId String
+  customer   User   @relation(fields: [customerId], references: [id])
+
+  items   RentalItem[]
+  payment Payment?
+
+  @@map("rental_orders")
+}
+
+model RentalItem {
+  id          String   @id @default(uuid())
+  quantity    Int
+  days        Int
+  pricePerDay Decimal  @db.Decimal(10, 2)
+  subtotal    Decimal  @db.Decimal(10, 2)
+  createdAt   DateTime @default(now())
+
+  rentalOrderId String
+  rentalOrder   RentalOrder @relation(fields: [rentalOrderId], references: [id], onDelete: Cascade)
+
+  gearItemId String
+  gearItem   GearItem @relation(fields: [gearItemId], references: [id])
+
+  @@map("rental_items")
+}
