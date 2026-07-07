@@ -1,10 +1,11 @@
+import config from "./config";
 import { prisma } from "./lib/prisma";
 import "dotenv/config";
 
 
 const express = require("express");
 const app = express();
-const port = process.env.PORT || 5001;
+const port = config.port || 5001;
 
 async function main() {
   try {
