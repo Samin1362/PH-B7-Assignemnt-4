@@ -1,26 +1,32 @@
+import type { Server } from "http";
+import app from "./app";
 import config from "./config";
 import { prisma } from "./lib/prisma";
-import "dotenv/config";
 
-
-const express = require("express");
-const app = express();
-const port = config.port || 5001;
+let server: Server;
 
 async function main() {
   try {
-    // Connect the client
     await prisma.$connect();
 
-    app.listen(port, () => {
-      console.log(`Example app listening on port ${port}`);
+    server = app.listen(config.port, () => {
+      console.log(`GearUp server listening on port ${config.port}`);
     });
-  } catch (e) {
-    // Disconnect the client only if startup failed
+  } catch (error) {
     await prisma.$disconnect();
-    throw e;
+    throw error;
   }
 }
+
+async function shutdown() {
+  server?.close(async () => {
+    await prisma.$disconnect();
+    process.exit(0);
+  });
+}
+
+process.on("SIGINT", shutdown);
+process.on("SIGTERM", shutdown);
 
 main();
 
