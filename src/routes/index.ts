@@ -3,6 +3,7 @@ import authRoutes from "../modules/auth/auth.route";
 import categoryRoutes from "../modules/category/category.route";
 import providerGearRoutes from "../modules/gear/gear.provider.route";
 import gearRoutes from "../modules/gear/gear.route";
+import paymentRoutes from "../modules/payment/payment.route";
 import providerOrderRoutes from "../modules/rental/rental.provider.route";
 import rentalRoutes from "../modules/rental/rental.route";
 import userRoutes from "../modules/user/user.route";
@@ -17,6 +18,7 @@ const moduleRoutes: { path: string; route: Router }[] = [
   { path: "/provider/gear", route: providerGearRoutes },
   { path: "/rentals", route: rentalRoutes },
   { path: "/provider/orders", route: providerOrderRoutes },
+  { path: "/payments", route: paymentRoutes },
 ];
 
 moduleRoutes.forEach(({ path, route }) => router.use(path, route));
