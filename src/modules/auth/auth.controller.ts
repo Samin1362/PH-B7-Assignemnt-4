@@ -40,4 +40,15 @@ const getMe = catchAsync(async (req, res) => {
   });
 });
 
-export const AuthController = { register, login, getMe };
+const logout = catchAsync(async (_req, res) => {
+  res.clearCookie("accessToken", cookieOptions);
+  res.clearCookie("refreshToken", cookieOptions);
+
+  sendResponse(res, {
+    statusCode: 200,
+    message: "Logout successful",
+    data: null,
+  });
+});
+
+export const AuthController = { register, login, getMe, logout };
