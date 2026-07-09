@@ -1,4 +1,5 @@
 import { Router } from "express";
+import adminRoutes from "../modules/admin/admin.route";
 import authRoutes from "../modules/auth/auth.route";
 import categoryRoutes from "../modules/category/category.route";
 import providerGearRoutes from "../modules/gear/gear.provider.route";
@@ -21,6 +22,7 @@ const moduleRoutes: { path: string; route: Router }[] = [
   { path: "/provider/orders", route: providerOrderRoutes },
   { path: "/payments", route: paymentRoutes },
   { path: "/reviews", route: reviewRoutes },
+  { path: "/admin", route: adminRoutes },
 ];
 
 moduleRoutes.forEach(({ path, route }) => router.use(path, route));
