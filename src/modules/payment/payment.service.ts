@@ -1,3 +1,4 @@
+import type Stripe from "stripe";
 import config from "../../config";
 import { prisma } from "../../lib/prisma";
 import { stripe } from "../../lib/stripe";
@@ -58,7 +59,7 @@ const handleWebhook = async (signature: string | undefined, rawBody: Buffer) => 
     throw new AppError(400, "Missing stripe signature");
   }
 
-  let event: import("stripe").Stripe.Event;
+  let event: Stripe.Event;
   try {
     event = stripe.webhooks.constructEvent(
       rawBody,
