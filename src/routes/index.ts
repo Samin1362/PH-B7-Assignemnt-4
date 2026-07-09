@@ -12,6 +12,18 @@ import userRoutes from "../modules/user/user.route";
 
 const router = Router();
 
+router.get("/health", (_req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "Server is healthy",
+    data: {
+      status: "ok",
+      uptime: process.uptime(),
+      timestamp: new Date().toISOString(),
+    },
+  });
+});
+
 const moduleRoutes: { path: string; route: Router }[] = [
   { path: "/auth", route: authRoutes },
   { path: "/users", route: userRoutes },
