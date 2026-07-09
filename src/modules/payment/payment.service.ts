@@ -30,7 +30,7 @@ const createPaymentIntent = async (customerId: string, rentalOrderId: string) =>
     amount: Math.round(Number(order.totalPrice) * 100),
     currency: "usd",
     metadata: { rentalOrderId, customerId },
-    automatic_payment_methods: { enabled: true },
+    automatic_payment_methods: { enabled: true, allow_redirects: "never" },
   });
 
   const payment = await prisma.payment.upsert({
