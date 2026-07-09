@@ -2,10 +2,10 @@
 
 A production-style REST API for renting sports and outdoor gear. Customers browse and rent gear, providers list gear and fulfil orders, and admins manage the platform. Payments are handled with real Stripe integration.
 
-- **Live API:** `TODO_ADD_YOUR_VERCEL_URL` (e.g. `https://gearup.vercel.app`)
-- **API Docs (Postman):** `TODO_ADD_YOUR_PUBLISHED_POSTMAN_LINK` — collection file also included in the repo at [`postman/GearUp.postman_collection.json`](./postman/GearUp.postman_collection.json)
+- **Live API:** https://ph-b7-assignemnt-4.vercel.app
+- **API Docs (Postman):** `TODO_ADD_YOUR_PUBLISHED_POSTMAN_LINK` — the collection is included in the repo at [`postman/GearUp.postman_collection.json`](./postman/GearUp.postman_collection.json) (import it into Postman)
 
-> Health check: `GET {LIVE_API}/api/v1/health`
+> Health check: https://ph-b7-assignemnt-4.vercel.app/api/v1/health
 
 ## Tech Stack
 
