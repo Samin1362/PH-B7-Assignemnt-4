@@ -6,7 +6,7 @@ import AppError from "../utils/AppError";
 const globalErrorHandler: ErrorRequestHandler = (error, _req, res, _next) => {
   let statusCode = 500;
   let message = "Something went wrong";
-  let errorDetails: unknown = error;
+  let errorDetails: unknown = { name: "InternalServerError" };
 
   if (error instanceof AppError) {
     statusCode = error.statusCode;
@@ -42,6 +42,23 @@ const globalErrorHandler: ErrorRequestHandler = (error, _req, res, _next) => {
     statusCode = 401;
     message = "Invalid token";
     errorDetails = { name: error.name };
+  } else if (error instanceof SyntaxError && "body" in error) {
+    statusCode = 400;
+    message = "Invalid JSON payload";
+    errorDetails = { name: error.name };
+  } else if (
+    typeof (error as { statusCode?: unknown })?.statusCode === "number" ||
+    typeof (error as { status?: unknown })?.status === "number"
+  ) {
+    const httpError = error as {
+      statusCode?: number;
+      status?: number;
+      message?: string;
+      name?: string;
+    };
+    statusCode = httpError.statusCode ?? httpError.status ?? 500;
+    message = httpError.message ?? message;
+    errorDetails = { name: httpError.name };
   } else if (error instanceof Error) {
     message = error.message;
     errorDetails = { name: error.name };
